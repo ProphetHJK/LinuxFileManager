@@ -1,12 +1,5 @@
-#include<cstdlib>
-#include<string.h>
-#include<sys/stat.h>
-#include<sys/types.h>
-#include<sys/time.h>
-#include<cstdio>
-#include<cstring>
-#include<iostream>
-#include<algorithm>
+#pragma once
+#include"Context.h"
 using namespace std;
 
 //inode的简化,单个文件的基本信息
@@ -19,8 +12,8 @@ private:
 	long ctime;//最后修改时间,也能表示创建时间
 	long vtime;//最后访问时间
 	unsigned long bytesize;//文件大小（字节）最大4GB
-	
-	knode* parent;//父节点的指针
+	Context *context;//文件内容
+	knode *parent;//父节点的指针
 	vector<knode*> child_list;//子节点的向量指针
 
 public:
@@ -47,6 +40,7 @@ public:
 	knode* findKnode(string name,bool dir);
 	//完全复制信息
 	knode* copyKnode();
+	Context* getcontext();
 	string getfilename();
 	long getvtime();
 	long getctime();

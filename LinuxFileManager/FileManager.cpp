@@ -10,6 +10,16 @@ FileManager::FileManager()
 }
 void  FileManager::deleteDir(knode *node)
 {
+	if (node == NULL)
+	{
+		cout << "Can't find this dictionary!" << endl;
+		return;
+	}
+	if (node->isdir == false)
+	{
+		cout << "Can't delete file!Please use rm." << endl;
+		return;
+	}
 	if (node->getNodeid() == 0)
 	{
 		cout << "Can't delete root dictionary!" << endl;
@@ -47,11 +57,17 @@ void  FileManager::deleteDir(knode *node)
 }
 void FileManager::deleteFile(knode *node)
 {
-	if (node->getNodeid() == 0)
+	if (node == NULL)
 	{
-		cout << "Can't delete root dictionary!" << endl;
+		cout << "Can't find this file!" << endl;
 		return;
 	}
+	if (node->isdir==true)
+	{
+		cout << "Can't delete dictionary!Please use rmd." << endl;
+		return;
+	}
+
 	node->getParent()->removeChild(node);
 	for (vector<knode*>::iterator it = fileblocks.begin(); it != fileblocks.end();)
 	{
@@ -83,7 +99,9 @@ knode* FileManager::createFile(string name, knode *parent)
 		knode *tmp = new knode(name, false, parent);
 		parent->addChildnode(tmp);
 		fileblocks.push_back(tmp);
-		cout << "Create " << tmp->getfilename() << " completed" << endl;
+		usedspace += tmp->getbytesize();
+		freespace = maxspace - usedspace;
+		//cout << "Create " << tmp->getfilename() << " completed" << endl;
 		return tmp;
 	}
 	return NULL;
@@ -99,7 +117,9 @@ knode* FileManager::createFile(string name)
 		knode *tmp = new knode(name, false, nowdir);
 		nowdir->addChildnode(tmp);
 		fileblocks.push_back(tmp);
-		cout << "Create " << tmp->getfilename() << " completed" << endl;
+		usedspace += tmp->getbytesize();
+		freespace = maxspace - usedspace;
+		//cout << "Create " << tmp->getfilename() << " completed" << endl;
 		return tmp;
 	}
 	return NULL;
@@ -116,7 +136,7 @@ knode* FileManager::createDir(string name, knode *parent)
 		knode *tmp = new knode(name, true, parent);
 		parent->addChildnode(tmp);
 		fileblocks.push_back(tmp);
-		cout << "Create " << tmp->getfilename() << " completed" << endl;
+		//cout << "Create " << tmp->getfilename() << " completed" << endl;
 		return tmp;
 	}
 	return NULL;
@@ -132,35 +152,78 @@ knode* FileManager::createDir(string name)
 		knode *tmp = new knode(name, true, nowdir);
 		nowdir->addChildnode(tmp);
 		fileblocks.push_back(tmp);
-		cout << "Create " << tmp->getfilename() << " completed" << endl;
+		//cout << "Create " << tmp->getfilename() << " completed" << endl;
 		return tmp;
 	}
 	return NULL;
 }
 //重命名文件
-void FileManager::renameFile(string oldname, string newname, knode *node)
+void FileManager::renameFile(string newname, knode *node)
 {
+	if (node->getParent()->findKnode(newname,false)!=NULL)
+	{
+		cout << "There is already a \"" << newname << "\" in parent dictionary!" << endl;
+		return;
+	}
 	node->setfilename(newname);
 }
 //重命名目录
-void FileManager::renameDir(string oldname, string newname, knode *node)
+void FileManager::renameDir(string newname, knode *node)
 {
+	if (node->getParent()->findKnode(newname, true) != NULL)
+	{
+		cout << "There is already a \"" << newname << "\" in parent dictionary!" << endl;
+		return;
+	}
 	node->setfilename(newname);
 }
 void FileManager::moveFile(knode *node, knode *newdir)
 {
+
+	if (newdir->isdir == false)
+	{
+		cout << "Target must be a dictionary!" << endl;
+		return;
+	}
+	if (newdir->findKnode(node->getfilename(), false) != NULL)
+	{
+		cout << "There is already a \"" << node->getfilename() << "\" in parent dictionary!" << endl;
+		return;
+	}
 	node->getParent()->removeChild(node);
+	node->setParent(newdir);
 	newdir->addChildnode(node);
 }
 //移动目录
 void FileManager::moveDir(knode *node, knode *newdir)
 {
+	if (newdir->isdir == false)
+	{
+		cout << "Target must be a dictionary!" << endl;
+		return;
+	}
+	if (newdir->findKnode(node->getfilename(), true) != NULL)
+	{
+		cout << "There is already a \"" << node->getfilename() << "\" in parent dictionary!" << endl;
+		return;
+	}
 	node->getParent()->removeChild(node);
+	node->setParent(newdir);
 	newdir->addChildnode(node);
 }
 //复制文件
 void FileManager::copyFile(knode *node, knode *newdir)
 {
+	if (newdir->isdir == false)
+	{
+		cout << "Target must be a dictionary!" << endl;
+		return;
+	}
+	if (newdir->findKnode(node->getfilename(), false) != NULL)
+	{
+		cout << "There is already a \"" << node->getfilename() << "\" in parent dictionary!" << endl;
+		return;
+	}
 	knode *tmp = node->copyKnode();
 	tmp->setParent(newdir);
 	newdir->addChildnode(tmp);
@@ -172,6 +235,16 @@ void FileManager::copyFile(knode *node, knode *newdir)
 //复制目录,bug无法复制本目录到子目录
 void FileManager::copyDir(knode *node, knode *newdir)
 {
+	if (newdir->isdir == false)
+	{
+		cout << "Target must be a dictionary!" << endl;
+		return;
+	}
+	if (newdir->findKnode(node->getfilename(), true) != NULL)
+	{
+		cout << "There is already a \"" << node->getfilename() << "\" in parent dictionary!" << endl;
+		return;
+	}
 	knode *tmp = node->copyKnode();
 	tmp->setParent(newdir);
 	newdir->addChildnode(tmp);
@@ -189,6 +262,82 @@ void FileManager::copyDir(knode *node, knode *newdir)
 		}
 	}
 	cout << "Copy " << tmp->getfilename() << " to " << newdir->getfilename() << " completed" << endl;
+}
+void FileManager::showFile()
+{
+	nowdir->showChild();
+}
+void FileManager::enterDir(string dir)
+{
+	if (dir == "../"&& nowdir->getParent()!=NULL)
+	{
+		nowdir = nowdir->getParent();
+		return;
+	}
+	else if (dir == "../"&& nowdir->getParent() == NULL)
+	{
+		cout << "you are at the top dictionary"<<endl;
+		return;
+	}
+	else
+	{
+		knode *tmp = nowdir->findKnode(dir, true);
+		if (tmp == NULL)
+			cout << "can't find dictionary"<<endl;
+		else
+			nowdir = tmp;
+	}
+
+}
+knode* FileManager::findFile(string filename,bool isdir)
+{
+	if (filename == "../")
+		return nowdir->getParent();
+	return nowdir->findKnode(filename, isdir);
+}
+
+void FileManager::showPWD(knode *node)
+{
+	if (node->getParent() == NULL)
+	{
+		cout << "/";
+		return;
+	}
+	else if (node->getParent()->getNodeid() == 0)
+	{
+		showPWD(node->getParent());
+		cout <<  node->getfilename() ;
+	}
+	else
+	{
+		showPWD(node->getParent());
+		cout << "/" << node->getfilename() ;
+	}
+}
+knode* FileManager::getNowdir()
+{
+	return nowdir;
+}
+//文本内容修改
+void FileManager::editText(knode *node,string str)
+{
+	long tmpsize = node->getcontext()->getSize();
+	node->getcontext()->setStr(str);
+	node->setbytesize(node->getcontext()->getSize());
+	usedspace += node->getcontext()->getSize() - tmpsize;
+	freespace = maxspace - usedspace;
+	node->setvtime();
+}
+//文本内容获取
+string *FileManager::catText(knode *node)
+{
+	return node->getcontext()->getStr();
+}
+void FileManager::showDf()
+{
+	cout << "maxsize:" << maxspace<<endl;
+	cout << "usedspace:" << usedspace<<endl;
+	cout << "freespace:" << freespace << endl;
 }
 void FileManager::test()
 {

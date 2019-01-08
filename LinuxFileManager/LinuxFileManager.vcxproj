@@ -81,12 +81,13 @@
     <LibraryPath>C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\Linux\include\usr\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemGroup>
+    <ClCompile Include="Context.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="knode.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="ui.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Context.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="knode.h" />
     <ClInclude Include="main.h" />

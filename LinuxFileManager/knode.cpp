@@ -9,11 +9,22 @@ knode::knode(string name, bool dir, knode *parentnode)
 	setctime();
 	nodeid = knodeid;
 	knodeid++;
-	setbytesize(0);
-	cout << "File has been created.The knodeid is " << nodeid << endl;
+	if (isdir == false)
+	{
+		context = new Context();
+		setbytesize(context->getSize());
+	}
+	else
+	{
+		context = NULL;
+		setbytesize(0);
+	}
+	//cout << "File has been created.The knodeid is " << nodeid << endl;
 }
 knode::~knode()
-{}
+{
+	delete context;
+}
 int knode::getNodeid()
 {
 	return nodeid;
@@ -86,11 +97,16 @@ string knode::getPath()
 }
 void knode::showChild()
 {
-	cout << "knodeid\tfilename\tcreatetime\tvisittime\tisdir\tsize" << endl;
+	if (child_list.empty())
+	{
+		cout << "empty here"<<endl;
+		return;
+	}
+	cout << "knodeid\t\tfilename\tcreatetime\tvisittime\tisdir\tsize" << endl;
 	for (vector<knode*>::iterator it = child_list.begin(); it != child_list.end();++it)
 	{
 		
-		cout << (*it)->getNodeid() <<"\t"<< (*it)->getfilename() << "\t" << (*it)->getctime() << "\t" << (*it)->getvtime() << "\t" << (*it)->isdir << "\t" << (*it)->getbytesize() << endl;
+		cout << (*it)->getNodeid() <<"\t\t"<< (*it)->getfilename() << "\t\t" << (*it)->getctime() << "\t" << (*it)->getvtime() << "\t" << (*it)->isdir << "\t" << (*it)->getbytesize() << endl;
 	}
 }
 bool knode::isDuplicate(string filename,bool isdir)
@@ -122,6 +138,7 @@ knode* knode::findKnode(string name,bool dir)
 			++it;
 		}
 	}
+	return NULL;
 }
 vector<knode*> &knode::getchildlist()
 {
@@ -133,4 +150,8 @@ knode* knode::copyKnode()
 	knode *tmp = new knode(getfilename(), isdir, NULL);
 	tmp->setbytesize(getbytesize());
 	return tmp;
+}
+Context* knode::getcontext()
+{
+	return context;
 }
