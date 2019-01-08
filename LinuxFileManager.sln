@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28407.52
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LinuxFileManager", "LinuxFileManager\LinuxFileManager.vcxproj", "{73D9BCC9-7922-4362-A64C-D20CD7649CE3}"
 EndProject
@@ -17,8 +17,8 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{73D9BCC9-7922-4362-A64C-D20CD7649CE3}.Debug|ARM.ActiveCfg = Debug|ARM
-		{73D9BCC9-7922-4362-A64C-D20CD7649CE3}.Debug|ARM.Build.0 = Debug|ARM
+		{73D9BCC9-7922-4362-A64C-D20CD7649CE3}.Debug|ARM.ActiveCfg = Debug|ARM64
+		{73D9BCC9-7922-4362-A64C-D20CD7649CE3}.Debug|ARM.Build.0 = Debug|ARM64
 		{73D9BCC9-7922-4362-A64C-D20CD7649CE3}.Debug|ARM64.ActiveCfg = Debug|ARM64
 		{73D9BCC9-7922-4362-A64C-D20CD7649CE3}.Debug|ARM64.Build.0 = Debug|ARM64
 		{73D9BCC9-7922-4362-A64C-D20CD7649CE3}.Debug|x64.ActiveCfg = Debug|x64
