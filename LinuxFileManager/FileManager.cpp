@@ -198,6 +198,6 @@ void FileManager::test()
 	tmp->showChild();
 	//deleteDir(tmp->findKnode("test1",true));
 	knode* tmp2 = createDir("copy");
-	copyDir(tmp, tmp->getchildlist()[0]);
+
 	tmp->getchildlist()[0]->showChild();
 }
