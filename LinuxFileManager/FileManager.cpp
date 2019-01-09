@@ -4,7 +4,7 @@ FileManager::FileManager()
 	maxspace = 4294967295;
 	freespace = maxspace;
 	usedspace = 0;
-	knode *rootdir = new knode("/", true, NULL);
+	rootdir = new knode("/", true, NULL);
 	nowdir = rootdir;
 	fileblocks.push_back(rootdir);
 }
@@ -293,6 +293,8 @@ knode* FileManager::findFile(string filename,bool isdir)
 {
 	if (filename == "../")
 		return nowdir->getParent();
+	if (filename == "/")
+		return rootdir;
 	return nowdir->findKnode(filename, isdir);
 }
 

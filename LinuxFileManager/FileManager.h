@@ -9,7 +9,7 @@ private:
 	long long freespace;//剩余空间
 	long long usedspace;//已使用空间
 	knode *nowdir;//当前目录
-	
+	knode *rootdir;
 public:
 	
 	//初始化
