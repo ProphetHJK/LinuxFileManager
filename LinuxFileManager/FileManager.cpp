@@ -44,7 +44,7 @@ void  FileManager::deleteDir(knode *node)
 		{
 			fileblocks.erase(fbit);
 			
-			cout << "Delete " << node->getfilename() << " completed" << endl;
+			//cout << "Delete " << node->getfilename() << " completed" << endl;
 			break;
 		}
 		else
@@ -76,7 +76,7 @@ void FileManager::deleteFile(knode *node)
 			fileblocks.erase(it);	
 			usedspace -= (*it)->getbytesize();
 			freespace = maxspace - usedspace;
-			cout << "Delete " << node->getfilename() << " completed" << endl;
+			//cout << "Delete " << node->getfilename() << " completed" << endl;
 			break;
 		}
 		else

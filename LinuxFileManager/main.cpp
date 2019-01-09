@@ -1,6 +1,6 @@
 #include"FileManager.h"
 using namespace std;
-
+//Ωªª•ΩÁ√Ê
 void StartMenu(FileManager *filemanager)
 {
 	string command;

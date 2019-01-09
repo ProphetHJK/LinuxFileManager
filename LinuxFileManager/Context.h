@@ -12,8 +12,8 @@ using namespace std;
 class Context
 {
 private:
-	string str;
-	long size;
+	string str;//字符串信息，用于文本文件
+	long size;//占用大小
 public:
 	Context();
 	void setStr(string tmp);
