@@ -29,37 +29,37 @@ FileManager类：文件管理类，用于knode，类成员包含knode指针向�
 
 使用help指令能在系统中显示所有可用指令，以下斜体表示实现的指令，全大写表示参数，之后表示其功能介绍。
 
-_ls_        显示当前目录下文件及目录
+ls        显示当前目录下文件及目录
 
-_pwd       _        显示绝对路径
+pwd               显示绝对路径
 
-_cd DIRECTORY_     进入目录
+cd DIRECTORY     进入目录
 
-_mkdir DIRECTORY       _     创建一个新目录，如果目录不存在
+mkdir DIRECTORY            创建一个新目录，如果目录不存在
 
-_touch FILE_      创建一个新文件，如果文件不存在
+touch FILE      创建一个新文件，如果文件不存在
 
-_rm FILE_       移除文件
+rm FILE       移除文件
 
-_rmd DIRECTORY_     递归移除目录
+rmd DIRECTORY     递归移除目录
 
-_mv SOURCE TARGET_    移动文件至目标目录
+mv SOURCE TARGET    移动文件至目标目录
 
-_mvd SOURCEDIRECTORY TARGET_ (递归)移动目录至目标目录
+mvd SOURCEDIRECTORY TARGET (递归)移动目录至目标目录
 
-_cp SOURCE TARGET_    复制文件至目标目录
+cp SOURCE TARGET    复制文件至目标目录
 
-_cpd SOURCEDIRECTORY TARGET_ 递归复制目录到目标目录
+cpd SOURCEDIRECTORY TARGET 递归复制目录到目标目录
 
-_vi FILE_       编辑文件，需要输入新的文本
+vi FILE       编辑文件，需要输入新的文本
 
-_cat FILE       _       查看文件内容
+cat FILE              查看文件内容
 
-_rename FILE TARGETNAME       _   重命名文件
+rename FILE TARGETNAME          重命名文件
 
-_renamed DIRECTORY TARGETNAME_ 重命名目录
+renamed DIRECTORY TARGETNAME 重命名目录
 
-_df_        显示文件系统信息
+df        显示文件系统信息
 
 #### 2.3 流程图
 ![](https://raw.githubusercontent.com/ProphetHJK/LinuxFileManager/master/pic/%E6%B5%81%E7%A8%8B%E5%9B%BE.png)
