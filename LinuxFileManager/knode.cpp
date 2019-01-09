@@ -149,6 +149,7 @@ knode* knode::copyKnode()
 {
 	knode *tmp = new knode(getfilename(), isdir, NULL);
 	tmp->setbytesize(getbytesize());
+	tmp->getcontext()->setStr(*getcontext()->getStr());
 	return tmp;
 }
 Context* knode::getcontext()
