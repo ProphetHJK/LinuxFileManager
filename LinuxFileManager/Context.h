@@ -8,12 +8,13 @@
 #include<cstring>
 #include<iostream>
 #include<algorithm>
+#include<vector>
 using namespace std;
 class Context
 {
 private:
-	string str;//字符串信息，用于文本文件
-	long size;//占用大小
+	string str;//瀛楃涓蹭俊鎭紝鐢ㄤ簬鏂囨湰鏂囦欢
+	long size;//鍗犵敤澶у皬
 public:
 	Context();
 	void setStr(string tmp);
